@@ -38,7 +38,7 @@ class Component {
 
   /**
    * Отрисовываем элемент
-   * @return {link}
+   * @return {Node}
    */
   render() {
     this._element = null || document.createElement(`div`);

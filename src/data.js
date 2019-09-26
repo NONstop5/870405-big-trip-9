@@ -9,48 +9,21 @@ const FILTER_NAME_LIST = [
   `past`
 ];
 
+// Список дней машрута
+const DAY_LIST = [
+  `2019-03-18`,
+  `2019-03-19`,
+  `2019-03-20`
+];
+
 // Список типов маршрутов
 const WAYPOINT_TYPE_LIST = [
-  {
-    name: `Taxi`,
-    icon: `🚕`
-  },
-  {
-    name: `Bus`,
-    icon: `🚌`
-  },
-  {
-    name: `Train`,
-    icon: `🚂`
-  },
-  {
-    name: `Ship`,
-    icon: `🛳️`
-  },
-  {
-    name: `Transport`,
-    icon: `🚊`
-  },
-  {
-    name: `Drive`,
-    icon: `🚗`
-  },
-  {
-    name: `Flight`,
-    icon: `✈️`
-  },
-  {
-    name: `Check-in`,
-    icon: `🏨`
-  },
-  {
-    name: `Sightseeing`,
-    icon: `🏛️`
-  },
-  {
-    name: `Restaurant`,
-    icon: `🍴`
-  }
+  `taxi`,
+  `bus`,
+  `train`,
+  `flight`,
+  `check-in`,
+  `sightseeing`
 ];
 
 // Список имен маршрутов
@@ -63,12 +36,20 @@ const WAYPOINT_DESTINATION_LIST = [
   `New York`
 ];
 
-// Список времени маршрутов
-const WAYPOINT_TIME_LIST = [
-  `9:00&nbsp;&mdash; 10:00`,
-  `10:00&nbsp;&mdash; 11:00`,
-  `11:00&nbsp;&mdash; 12:00`,
-  `12:00&nbsp;&mdash; 13:00`
+// Список времени начала маршрутов
+const WAYPOINT_START_TIME_LIST = [
+  `9:00`,
+  `10:00`,
+  `11:00`,
+  `12:00`
+];
+
+// Список времени окончания маршрутов
+const WAYPOINT_END_TIME_LIST = [
+  `10:00`,
+  `11:00`,
+  `12:00`,
+  `13:00`
 ];
 
 // Список продолительности маршрутов
@@ -87,12 +68,52 @@ const WAYPOINT_PRICE_LIST = [
   `40`
 ];
 
+// Список типов офферов
+/*
+const WAYPOINT_OFFER_TYPE_LIST = [
+  `taxi`,
+  `bus`,
+  `train`,
+  `ship`,
+  `transport`,
+  `drive`,
+  `flight`,
+  `check-in`,
+  `sightseeing`,
+  `restaurant`
+];
+*/
+
 // Список предложений
 const WAYPOINT_OFFER_LIST = [
-  `Add luggage`,
-  `Switch to comfort class`,
-  `Add meal`,
-  `Choose seats`
+  {
+    title: `Add luggage`,
+    price: 10
+  },
+  {
+    title: `Switch to comfort`,
+    price: 10
+  },
+  {
+    title: `Rent a car`,
+    price: 10
+  },
+  {
+    title: `Add breakfast`,
+    price: 10
+  },
+  {
+    title: `Book tickets`,
+    price: 10
+  },
+  {
+    title: `Lunch in city`,
+    price: 10
+  },
+  {
+    title: `Choose seats`,
+    price: 10
+  },
 ];
 
 // Список текстовых предложений
@@ -152,14 +173,64 @@ const getPhotoList = () => {
   return photoList;
 };
 
+/**
+ * Возвращает цену
+ * @return {string}
+ */
+const getPrice = () => {
+  return WAYPOINT_PRICE_LIST[getRandomValueRange(0, WAYPOINT_PRICE_LIST.length - 1)];
+};
+
+/**
+ * Возвращает длительность
+ * @return {string}
+ */
+const getDuration = () => {
+  return WAYPOINT_DURATION_LIST[getRandomValueRange(0, WAYPOINT_DURATION_LIST.length - 1)];
+};
+
+/**
+ * Возвращает дату начала
+ * @return {string}
+ */
+const getTimeStart = () => {
+  return WAYPOINT_START_TIME_LIST[getRandomValueRange(0, WAYPOINT_START_TIME_LIST.length - 1)];
+};
+
+/**
+ * Возвращает дату окончания
+ * @return {string}
+ */
+const getTimeEnd = () => {
+  return WAYPOINT_END_TIME_LIST[getRandomValueRange(0, WAYPOINT_END_TIME_LIST.length - 1)];
+};
+
+/**
+ * Возвращает пункт назначения
+ * @return {string}
+ */
+const getDestionation = () => {
+  return WAYPOINT_DESTINATION_LIST[getRandomValueRange(0, WAYPOINT_DESTINATION_LIST.length - 1)];
+};
+
+/**
+ * Возвращает тип маршрута
+ * @return {string}
+ */
+const getPointType = () => {
+  return WAYPOINT_TYPE_LIST[getRandomValueRange(0, WAYPOINT_TYPE_LIST.length - 1)];
+};
+
 export {
   FILTER_NAME_LIST,
+  DAY_LIST,
   WAYPOINT_TYPE_LIST,
-  WAYPOINT_DESTINATION_LIST,
-  WAYPOINT_TIME_LIST,
-  WAYPOINT_DURATION_LIST,
-  WAYPOINT_PRICE_LIST,
-  WAYPOINT_OFFER_LIST,
+  getPointType,
+  getDestionation,
+  getTimeStart,
+  getTimeEnd,
+  getDuration,
+  getPrice,
   getPhotoList,
   getOfferList,
   getTextList

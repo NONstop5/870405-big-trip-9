@@ -1,11 +1,12 @@
 import {Component} from "./сomponent";
 
-class Waypoint extends Component {
+export class Waypoint extends Component {
   constructor(data) {
     super();
     this._type = data.type;
     this._destination = data.destination;
-    this._time = data.time;
+    this._timeStart = data.timeStart;
+    this._timeEnd = data.timeEnd;
     this._duration = data.duration;
     this._price = data.price;
     this._photo = data.photo;
@@ -24,9 +25,11 @@ class Waypoint extends Component {
   _generateOffersHtml(offerList) {
     return offerList.reduce((resultHtml, offerItem) => {
       return resultHtml + `
-      <li>
-        <button class="trip-point__offer">${offerItem}</button>
-      </li>
+        <li class="event__offer">
+          <span class="event__offer-title">${offerItem.title}</span>
+          &plus;
+          &euro;&nbsp;<span class="event__offer-price">${offerItem.price}</span>
+        </li>
     `;
     }, ``);
   }
@@ -48,18 +51,36 @@ class Waypoint extends Component {
    */
   get template() {
     return `
-    <article class="trip-point">
-      <i class="trip-icon">${this._type.icon}</i>
-      <h3 class="trip-point__title">${this._type.name} to ${this._destination}<br><br>${this._generateTextHtml(this._text)}</h3>
-      <p class="trip-point__schedule">
-        <span class="trip-point__timetable">${this._time}</span>
-        <span class="trip-point__duration">${this._duration}</span>
-      </p>
-      <p class="trip-point__price">&euro;&nbsp;${this._price}</p>
-      <ul class="trip-point__offers">
-      ${this._generateOffersHtml(this._offers)}
-      </ul>
-    </article>
+      <li class="trip-events__item">
+        <div class="event">
+          <div class="event__type">
+            <img class="event__type-icon" width="42" height="42" src="img/icons/${this._type.toLowerCase()}.png" alt="Event type icon">
+          </div>
+          <h3 class="event__title">${this._type} to ${this._destination}</h3>
+  
+          <div class="event__schedule">
+            <p class="event__time">
+              <time class="event__start-time" datetime="2019-03-18T${this._timeStart}">${this._timeStart}</time>
+              &mdash;
+              <time class="event__end-time" datetime="2019-03-18T${this._timeEnd}">${this._timeEnd}</time>
+            </p>
+            <p class="event__duration">${this._duration}</p>
+          </div>
+  
+          <p class="event__price">
+            &euro;&nbsp;<span class="event__price-value">${this._price}</span>
+          </p>
+  
+          <h4 class="visually-hidden">Offers:</h4>
+          <ul class="event__selected-offers">
+            ${this._generateOffersHtml(this._offers)}
+          </ul>
+  
+          <button class="event__rollup-btn" type="button">
+            <span class="visually-hidden">Open event</span>
+          </button>
+        </div>
+      </li>
   `;
   }
 
@@ -87,7 +108,3 @@ class Waypoint extends Component {
     this._element.removeEventListener(`click`, this._onWaypointClick);
   }
 }
-
-export {
-  Waypoint
-};

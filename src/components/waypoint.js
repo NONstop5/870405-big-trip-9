@@ -9,12 +9,23 @@ export class Waypoint extends Component {
     this._timeEnd = data.timeEnd;
     this._duration = data.duration;
     this._price = data.price;
-    this._photo = data.photo;
-    this._offers = data.offers;
-    this._text = data.text;
+    this._offerCheckedIndexes = data.offerCheckedIndexes;
+    this._offerList = data.offerList;
 
     this._onClick = null;
     this._onWaypointClick = this._onWaypointClick.bind(this);
+  }
+
+  _getOfferCheckedStatus(offerIndex) {
+    return this._offerCheckedIndexes.some((offerItem) => {
+      return offerItem === offerIndex;
+    }) ? `
+        <li class="event__offer">
+          <span class="event__offer-title">${this._offerList[offerIndex].title}</span>
+          &plus;
+          &euro;&nbsp;<span class="event__offer-price">${this._offerList[offerIndex].price}</span>
+        </li>
+    ` : ``;
   }
 
   /**
@@ -23,25 +34,8 @@ export class Waypoint extends Component {
    * @return {array}
    */
   _generateOffersHtml(offerList) {
-    return offerList.reduce((resultHtml, offerItem) => {
-      return resultHtml + `
-        <li class="event__offer">
-          <span class="event__offer-title">${offerItem.title}</span>
-          &plus;
-          &euro;&nbsp;<span class="event__offer-price">${offerItem.price}</span>
-        </li>
-    `;
-    }, ``);
-  }
-
-  /**
-   * Генерирует html - код текстовых предложений
-   * @param {array} textList
-   * @return {string}
-   */
-  _generateTextHtml(textList) {
-    return textList.reduce((resultHtml, textItem) => {
-      return resultHtml + `${textItem}<br>`;
+    return offerList.reduce((resultHtml, offerItem, offerIndex) => {
+      return resultHtml + this._getOfferCheckedStatus(offerIndex);
     }, ``);
   }
 
@@ -73,7 +67,7 @@ export class Waypoint extends Component {
   
           <h4 class="visually-hidden">Offers:</h4>
           <ul class="event__selected-offers">
-            ${this._generateOffersHtml(this._offers)}
+            ${this._generateOffersHtml(this._offerList)}
           </ul>
   
           <button class="event__rollup-btn" type="button">

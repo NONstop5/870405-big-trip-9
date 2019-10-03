@@ -3,6 +3,8 @@ import {
   FILTER_NAME_LIST,
   DAY_LIST,
   WAYPOINT_TYPE_LIST,
+  WAYPOINT_DESTINATION_LIST,
+  WAYPOINT_OFFER_LIST,
   getPointType,
   getDestionation,
   getTimeStart,
@@ -10,7 +12,7 @@ import {
   getDuration,
   getPrice,
   getPhotoList,
-  getOfferList,
+  getOfferCheckedIndexes,
   getTextList
 } from './data';
 import menu from './components/trip-tabs';
@@ -106,13 +108,15 @@ const generateWaypoints = (containerElem, pointsCount) => {
       timeEnd: getTimeEnd(),
       id: 0,
       isFavorite: false,
-      offers: getOfferList(),
+      offerCheckedIndexes: getOfferCheckedIndexes(),
+      offerList: WAYPOINT_OFFER_LIST,
       destination: getDestionation(),
+      destinationList: WAYPOINT_DESTINATION_LIST,
       type: getPointType(),
       typeList: WAYPOINT_TYPE_LIST,
       duration: getDuration(),
-      photo: getPhotoList(),
-      text: getTextList()
+      photoList: getPhotoList(),
+      textList: getTextList()
     };
 
     const waypointComponent = new Waypoint(waypointObj);
@@ -120,9 +124,17 @@ const generateWaypoints = (containerElem, pointsCount) => {
 
     containerElem.appendChild(waypointComponent.render());
 
-    waypointComponent.onClick = replaceComponents(containerElem, waypointEditComponent, waypointComponent);
-    waypointEditComponent.onSubmit = replaceComponents(containerElem, waypointComponent, waypointEditComponent);
-    // waypointEditComponent.onReset = replaceComponents(containerElem, waypointComponent, waypointEditComponent);
+    waypointComponent.onClick = () => {
+      replaceComponents(containerElem, waypointEditComponent, waypointComponent);
+    };
+
+    waypointEditComponent.onSubmit = () => {
+      replaceComponents(containerElem, waypointComponent, waypointEditComponent);
+    };
+
+    waypointEditComponent.onReset = () => {
+      replaceComponents(containerElem, waypointComponent, waypointEditComponent);
+    };
   }
 };
 

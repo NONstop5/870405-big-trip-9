@@ -11,19 +11,24 @@ const FILTER_NAME_LIST = [
 
 // Список дней машрута
 const DAY_LIST = [
-  `2019-03-18`,
+  Date.now() + 1 + Math.floor(Math.random() * 7) * 24 * 60 * 60 * 1000,
   `2019-03-19`,
   `2019-03-20`
 ];
 
 // Список типов маршрутов
 const WAYPOINT_TYPE_LIST = [
-  `taxi`,
   `bus`,
-  `train`,
-  `flight`,
   `check-in`,
-  `sightseeing`
+  `drive`,
+  `flight`,
+  `restaurant`,
+  `ship`,
+  `sightseeing`,
+  `taxi`,
+  `train`,
+  `transport`,
+  `trip`
 ];
 
 // Список имен маршрутов
@@ -68,54 +73,6 @@ const WAYPOINT_PRICE_LIST = [
   `40`
 ];
 
-// Список типов офферов
-/*
-const WAYPOINT_OFFER_TYPE_LIST = [
-  `taxi`,
-  `bus`,
-  `train`,
-  `ship`,
-  `transport`,
-  `drive`,
-  `flight`,
-  `check-in`,
-  `sightseeing`,
-  `restaurant`
-];
-*/
-
-// Список предложений
-const WAYPOINT_OFFER_LIST = [
-  {
-    title: `Add luggage`,
-    price: 10
-  },
-  {
-    title: `Switch to comfort`,
-    price: 10
-  },
-  {
-    title: `Rent a car`,
-    price: 10
-  },
-  {
-    title: `Add breakfast`,
-    price: 10
-  },
-  {
-    title: `Book tickets`,
-    price: 10
-  },
-  {
-    title: `Lunch in city`,
-    price: 10
-  },
-  {
-    title: `Choose seats`,
-    price: 10
-  },
-];
-
 // Список текстовых предложений
 const WAYPOINT_TEXT_LIST = [
   `Lorem ipsum dolor sit amet,consectetur adipiscing elit.`,
@@ -131,18 +88,47 @@ const WAYPOINT_TEXT_LIST = [
   `In rutrum ac purus sit amet tempus.`
 ];
 
+// Список предложений
+const WAYPOINT_OFFER_LIST = [
+  {
+    type: `luggage`,
+    title: `Add luggage`,
+    price: 30
+  },
+  {
+    type: `comfort`,
+    title: `Switch to comfort`,
+    price: 100
+  },
+  {
+    type: `meal`,
+    title: `Add meal`,
+    price: 15
+  },
+  {
+    type: `seats`,
+    title: `Choose seats`,
+    price: 5
+  },
+  {
+    type: `train`,
+    title: `Travel by train`,
+    price: 40
+  }
+];
+
 /**
  * Генерирует и возвращает массив оферов
  * @return {array}
  */
-const getOfferList = () => {
-  const offersCount = getRandomValueRange(0, 2);
-  let offerList = [];
-  for (let i = 1; i <= offersCount; i++) {
-    offerList.push(WAYPOINT_OFFER_LIST[getRandomValueRange(0, WAYPOINT_OFFER_LIST.length - 1)]);
+const getOfferCheckedIndexes = () => {
+  const checkedOffersCount = getRandomValueRange(0, 2);
+  let offerCheckedIndexes = [];
+  for (let i = 1; i <= checkedOffersCount; i++) {
+    offerCheckedIndexes.push(getRandomValueRange(1, WAYPOINT_OFFER_LIST.length - 1));
   }
 
-  return offerList;
+  return offerCheckedIndexes;
 };
 
 /**
@@ -225,6 +211,8 @@ export {
   FILTER_NAME_LIST,
   DAY_LIST,
   WAYPOINT_TYPE_LIST,
+  WAYPOINT_DESTINATION_LIST,
+  WAYPOINT_OFFER_LIST,
   getPointType,
   getDestionation,
   getTimeStart,
@@ -232,6 +220,6 @@ export {
   getDuration,
   getPrice,
   getPhotoList,
-  getOfferList,
+  getOfferCheckedIndexes,
   getTextList
 };

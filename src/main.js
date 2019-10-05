@@ -135,6 +135,10 @@ const generateWaypoints = (containerElem, pointsCount) => {
     waypointEditComponent.onReset = () => {
       replaceComponents(containerElem, waypointComponent, waypointEditComponent);
     };
+
+    waypointEditComponent.onKeyPress = () => {
+      replaceComponents(containerElem, waypointComponent, waypointEditComponent);
+    };
   }
 };
 

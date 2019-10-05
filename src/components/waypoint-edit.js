@@ -18,8 +18,10 @@ class WaypointEdit extends Component {
 
     this._onSubmit = null;
     this._onReset = null;
+    this._onKeyPress = null;
     this._onWaypointSubmit = this._onWaypointSubmit.bind(this);
     this._onWaypointReset = this._onWaypointReset.bind(this);
+    this._onWaypointKeyPress = this._onWaypointKeyPress.bind(this);
   }
 
   /**
@@ -195,18 +197,30 @@ class WaypointEdit extends Component {
     }
   }
 
+  set onSubmit(fn) {
+    this._onSubmit = fn;
+  }
+
   _onWaypointReset() {
     if (typeof this._onReset === `function`) {
       this._onReset();
     }
   }
 
-  set onSubmit(fn) {
-    this._onSubmit = fn;
-  }
-
   set onReset(fn) {
     this._onReset = fn;
+  }
+
+  _onWaypointKeyPress(evt) {
+    if (typeof this._onReset === `function`) {
+      if (evt.key === `Escape` || evt.key === `Esc`) {
+        this._onReset();
+      }
+    }
+  }
+
+  set onKeyPress(fn) {
+    this._onKeyPress = fn;
   }
 
   /**
@@ -218,6 +232,7 @@ class WaypointEdit extends Component {
 
     eventBtnSubmitElem.addEventListener(`click`, this._onWaypointSubmit);
     eventBtnResetElem.addEventListener(`click`, this._onWaypointReset);
+    document.addEventListener(`keydown`, this._onWaypointKeyPress);
   }
 
   /**
@@ -229,6 +244,7 @@ class WaypointEdit extends Component {
 
     eventBtnSubmitElem.removeEventListener(`click`, this._onWaypointSubmit);
     eventBtnResetElem.removeEventListener(`click`, this._onWaypointReset);
+    document.removeEventListener(`keydown`, this._onWaypointKeyPress);
   }
 }
 

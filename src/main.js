@@ -19,6 +19,7 @@ import menu from './components/trip-tabs';
 import filter from './components/filter';
 import sort from './components/sort';
 import {TripDay} from './components/trip-day';
+import {NoPoint} from './components/no-points';
 import {Waypoint} from './components/waypoint';
 import {WaypointEdit} from './components/waypoint-edit';
 
@@ -27,7 +28,7 @@ const tripDaysElem = document.querySelector(`.trip-days`);
 const waypointsElem = document.querySelector(`.trip-day__items`);
 const tripEventsElem = document.querySelector(`.trip-events`);
 
-const EVENTS_COUNT = 3;
+const EVENTS_COUNT = 1;
 /**
  * Отрисовка меню
  */
@@ -61,12 +62,18 @@ const renderSort = () => {
  */
 const renderDays = () => {
   tripDaysElem.innerHTML = ``;
-
+  if (!DAY_LIST.length) {
+    const noPointComponent = new NoPoint();
+    tripEventsElem.appendChild(noPointComponent.render());
+  }
   DAY_LIST.forEach(function (day, dayIndex) {
-    const tripDayComponent = new TripDay(day, dayIndex);
+    const eventCount = getRandomValueRange(0, EVENTS_COUNT);
+    if (eventCount) {
+      const tripDayComponent = new TripDay(day, dayIndex);
 
-    tripDaysElem.appendChild(tripDayComponent.render());
-    generateWaypoints(tripDayComponent.element.querySelector(`.trip-events__list`), getRandomValueRange(1, EVENTS_COUNT));
+      tripDaysElem.appendChild(tripDayComponent.render());
+      generateWaypoints(tripDayComponent.element.querySelector(`.trip-events__list`), eventCount);
+    }
   });
 };
 
